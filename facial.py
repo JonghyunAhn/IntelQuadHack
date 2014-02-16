@@ -28,9 +28,7 @@ def findFaces(picFile):
       roi_gray = gray[y:y+h, x:x+w]
       roi_color = img[y:y+h, x:x+w]
 
-  cv2.imshow('img',img)
-  cv2.waitKey(0)
-  cv2.destroyAllWindows()
+  return img
 
 if __name__ == "__main__":
   import sys
