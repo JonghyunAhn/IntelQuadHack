@@ -2,7 +2,7 @@ import Image
 import numpy as np
 import pygame
 import pygame.surfarray
-import facial
+from facial import *
 import time
 
 import pygame.transform
@@ -12,7 +12,7 @@ def main():
 
   #Constants
   SCREEN_HEIGHT, SCREEN_WIDTH = 360,720
-  FPS = 50
+  FPS = 20
 
   #Setting up Drone
   pygame.init()
@@ -62,14 +62,14 @@ def main():
     try:
       pixelarray = drone.get_image()  #The image in pixels (RGB)
       #Image Piping If Found Person in Picture
-      #result = findFaces(pixelarray)
+      result = findFaces(pixelarray)
       #print 'I get here'
-      #img2 = Image.fromarray(result,'RGB')
-      #img2.save('./tmp/img2.png')
+      img2 = Image.fromarray(result,'RGB')
+      img2.save('./tmp/img2.png')
       
       if pixelarray != None:
         #Pygame Gui Design
-        surface = pygame.surfarray.make_surface(pixelarray)
+        surface = pygame.surfarray.make_surface(result)
         rotsurface = pygame.transform.rotate(surface, 270)
         screen.blit(rotsurface, (0, 0))
       hud_color = (255, 0, 0) if drone.navdata.get('drone_state', dict()).get('emergency_mask', 1) else (10, 10, 255)
