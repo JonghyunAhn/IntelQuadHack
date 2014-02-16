@@ -10,12 +10,12 @@ from libardrone import libardrone
 def main():
 
   #Constants
-  SCREEN_HEIGHT, SCREEN_WIDTH = 360,720
-  FPS = .1
+  SCREEN_HEIGHT, SCREEN_WIDTH = 120,120
+  FPS = 5
 
   #Setting up Drone
   pygame.init()
-  drone = libardrone.ARDrone(True)  #CHANGE THIS TO IMAGE_PROCCESSING
+  drone = libardrone.ARDrone(True,True)  #CHANGE THIS TO IMAGE_PROCCESSING
   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
   drone.reset()
   clock = pygame.time.Clock()
@@ -61,11 +61,11 @@ def main():
     try:
       pixelarray = drone.get_image()  #The image in pixels (RGB)
       #Image Piping If Found Person in Picture
-      #result = findFaces(pixelarray)
+      result = findFaces(pixelarray)
       img = Image.fromarray(pixelarray,'RGB')
-      #img2 = Image.fromarray(result,'RGB')
+      img2 = Image.fromarray(result,'RGB')
       img.save('./tmp/img.png')
-      #img2.save('./tmp/img2.png')
+      img2.save('./tmp/img2.png')
       
       if pixelarray != None:
         #Pygame Gui Design

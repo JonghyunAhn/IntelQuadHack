@@ -13,7 +13,6 @@ def findFaces(picFile):
 #  body_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_fullbody.xml'))
 #  body_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_lowerbody.xml'))
 #  body_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_upperbody.xml'))
-  
   img = picFile
   gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #  antigray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -45,4 +44,4 @@ def findFaces(picFile):
   
 if __name__ == "__main__":
   import sys
-  findFaces(sys.argv[1])
+  print findFaces(sys.argv[1])
