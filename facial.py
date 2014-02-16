@@ -6,11 +6,12 @@ face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades
 face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml'))
 face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt_tree.xml'))
 face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt2.xml'))
-eye_cascades = []
-eye_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_eye.xml'))
-eye_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_eye_tree_eyeglasses.xml'))
+face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_fullbody.xml'))
+face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_lowerbody.xml'))
+face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_upperbody.xml'))
+face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_profileface.xml'))
 
-img = cv2.imread('jesus.jpg')
+img = cv2.imread('Chinese_Crowd.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 faces = []
@@ -21,12 +22,6 @@ for stuff in faces:
     cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
     roi_gray = gray[y:y+h, x:x+w]
     roi_color = img[y:y+h, x:x+w]
-    eyes = []
-    for eye_cascade in eye_cascades:
-      eyes.append(eye_cascade.detectMultiScale(roi_gray))
-    for things in eyes:
-      for (ex,ey,ew,eh) in things:
-        cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
 
 cv2.imshow('img',img)
 cv2.waitKey(0)
