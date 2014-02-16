@@ -1,7 +1,8 @@
 import numpy as np
+import sys
 import cv2
 
-def findFaces(picFile):
+def findFaces(picFile, index):
   face_cascades = []
   face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml'))
 #  face_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml'))
@@ -13,7 +14,7 @@ def findFaces(picFile):
 #  body_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_fullbody.xml'))
 #  body_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_lowerbody.xml'))
 #  body_cascades.append(cv2.CascadeClassifier('/usr/local/share/OpenCV/haarcascades/haarcascade_upperbody.xml'))
-  img = picFile
+  img = cv2.imread(picFile)
   gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #  antigray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #  for i in xrange(gray.shape[0]):
@@ -22,7 +23,7 @@ def findFaces(picFile):
   
   faces = []
   for face_cascade in face_cascades:
-    faces.append(face_cascade.detectMultiScale(gray, 1.13, 10))
+    faces.append(face_cascade.detectMultiScale(gray, 1.05, 5))
 #    faces.append(face_cascade.detectMultiScale(antigray, 1.13, 10))
 #  bodies = []
 #  for body_cascade in body_cascades:
@@ -30,7 +31,7 @@ def findFaces(picFile):
 #    bodies.append(body_cascade.detectMultiScale(antigray, 1.08, 10))
   for stuff in faces:
     for (x,y,w,h) in stuff:
-      cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+      cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
       roi_gray = gray[y:y+h, x:x+w]
       roi_color = img[y:y+h, x:x+w]
   
@@ -40,8 +41,8 @@ def findFaces(picFile):
 #      roi_gray = gray[y:y+h, x:x+w]
 #      roi_color = img[y:y+h, x:x+w]
 
-  return img
+  if faces:
+    cv2.imwrite("tmp" + str(int(index)//10) + '.jpg', img)
   
 if __name__ == "__main__":
-  import sys
-  print findFaces(sys.argv[1])
+  findFaces(sys.argv[1], sys.argv[2])

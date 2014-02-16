@@ -2,7 +2,8 @@ import Image
 import numpy as np
 import pygame
 import pygame.surfarray
-import facial
+import cv2
+import os
 
 import pygame.transform
 from libardrone import libardrone
@@ -10,8 +11,8 @@ from libardrone import libardrone
 def main():
 
   #Constants
-  SCREEN_HEIGHT, SCREEN_WIDTH = 120,120
-  FPS = 5
+  SCREEN_HEIGHT, SCREEN_WIDTH = 360, 720
+  FPS = 10
 
   #Setting up Drone
   pygame.init()
@@ -20,6 +21,7 @@ def main():
   drone.reset()
   clock = pygame.time.Clock()
   running = True
+  index = 0
 
   #Pygame Event Listener
   while running:
@@ -61,12 +63,14 @@ def main():
     try:
       pixelarray = drone.get_image()  #The image in pixels (RGB)
       #Image Piping If Found Person in Picture
-      result = findFaces(pixelarray)
-      img = Image.fromarray(pixelarray,'RGB')
-      img2 = Image.fromarray(result,'RGB')
-      img.save('./tmp/img.png')
-      img2.save('./tmp/img2.png')
       
+      if index % 10 == 0:
+        cv2.imwrite('tmp_out' + str(index//10) + '.jpg', pixelarray)
+        os.system('python facial.py tmp_out' + str(index//10) + '.jpg ' + str(index))
+        os.system('rm tmp_out' + str(index//10) + '.jpg')
+
+      index += 1
+     
       if pixelarray != None:
         #Pygame Gui Design
         surface = pygame.surfarray.make_surface(pixelarray)
