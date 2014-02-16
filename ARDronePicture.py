@@ -3,6 +3,7 @@ import numpy as np
 import pygame
 import pygame.surfarray
 import facial
+import time
 
 import pygame.transform
 from libardrone import libardrone
@@ -10,8 +11,8 @@ from libardrone import libardrone
 def main():
 
   #Constants
-  SCREEN_HEIGHT, SCREEN_WIDTH = 120,120
-  FPS = 5
+  SCREEN_HEIGHT, SCREEN_WIDTH = 360,720
+  FPS = 50
 
   #Setting up Drone
   pygame.init()
@@ -61,22 +62,21 @@ def main():
     try:
       pixelarray = drone.get_image()  #The image in pixels (RGB)
       #Image Piping If Found Person in Picture
-      result = findFaces(pixelarray)
-      img = Image.fromarray(pixelarray,'RGB')
-      img2 = Image.fromarray(result,'RGB')
-      img.save('./tmp/img.png')
-      img2.save('./tmp/img2.png')
+      #result = findFaces(pixelarray)
+      #print 'I get here'
+      #img2 = Image.fromarray(result,'RGB')
+      #img2.save('./tmp/img2.png')
       
       if pixelarray != None:
         #Pygame Gui Design
         surface = pygame.surfarray.make_surface(pixelarray)
         rotsurface = pygame.transform.rotate(surface, 270)
         screen.blit(rotsurface, (0, 0))
-        hud_color = (255, 0, 0) if drone.navdata.get('drone_state', dict()).get('emergency_mask', 1) else (10, 10, 255)
-        bat = drone.navdata.get(0, dict()).get('battery', 0)
-        f = pygame.font.Font(None, 20)
-        hud = f.render('Battery: %i%%' % bat, True, hud_color)
-        screen.blit(hud, (10, 10))
+      hud_color = (255, 0, 0) if drone.navdata.get('drone_state', dict()).get('emergency_mask', 1) else (10, 10, 255)
+      bat = drone.navdata.get(0, dict()).get('battery', 0)
+      f = pygame.font.Font(None, 20)
+      hud = f.render('Battery: %i%%' % bat, True, hud_color)
+      screen.blit(hud, (10, 10))
     except:
       pass
 
