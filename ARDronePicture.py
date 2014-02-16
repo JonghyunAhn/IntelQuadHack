@@ -76,11 +76,11 @@ def main():
         surface = pygame.surfarray.make_surface(pixelarray)
         rotsurface = pygame.transform.rotate(surface, 270)
         screen.blit(rotsurface, (0, 0))
-        hud_color = (255, 0, 0) if drone.navdata.get('drone_state', dict()).get('emergency_mask', 1) else (10, 10, 255)
-        bat = drone.navdata.get(0, dict()).get('battery', 0)
-        f = pygame.font.Font(None, 20)
-        hud = f.render('Battery: %i%%' % bat, True, hud_color)
-        screen.blit(hud, (10, 10))
+        #hud_color = (255, 0, 0) if drone.navdata.get('drone_state', dict()).get('emergency_mask', 1) else (10, 10, 255)
+        #bat = drone.navdata.get(0, dict()).get('battery', 0)
+        #f = pygame.font.Font(None, 20)
+        #hud = f.render('Battery: %i%%' % bat, True, hud_color)
+        #screen.blit(hud, (10, 10))
     except:
       pass
 
